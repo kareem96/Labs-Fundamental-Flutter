@@ -19,8 +19,7 @@ class _NewsListPageState extends State<NewsListPage> {
         title: Text('News App'),
       ),
       body: FutureBuilder<String>(
-        future:
-            DefaultAssetBundle.of(context).loadString('assets/articles.json'),
+        future: DefaultAssetBundle.of(context).loadString('assets/articles.json'),
         builder: (context, snapshot) {
           final List<Article> articles = parseArticles(snapshot.data);
           return ListView.builder(

@@ -14,6 +14,7 @@ class ArticleWebView extends StatelessWidget {
         title: const Text('News App'),
       ),
       body: WebView(
+        javascriptMode: JavascriptMode.unrestricted,
         initialUrl: url,
       ),
     );
