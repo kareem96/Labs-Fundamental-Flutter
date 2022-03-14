@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  '0',
+                  screenText,
                   style: Theme.of(context)
                       .textTheme
                       .headline3!
