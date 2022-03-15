@@ -1,0 +1,10 @@
+{
+  "titleApp": "Aplikasi Lokalisasi",
+  "@titleApp": {
+    "description": "Deskripsi mengenai variabel titleApp"
+  },
+  "helloWorld": "Halo Dunia!",
+  "@helloWorld": {
+    "description": "Deskripsi variabel helloWorld"
+  }
+}
