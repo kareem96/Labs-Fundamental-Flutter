@@ -3,8 +3,23 @@
   "@titleApp": {
     "description": "Deskripsi mengenai variabel titleApp"
   },
-  "helloWorld": "Halo Dunia!",
+  "helloWorld": "Halo Dunia! Nama saya {myName}",
   "@helloWorld": {
-    "description": "Deskripsi variabel helloWorld"
+    "description": "Deskripsi variabel helloWorld",
+    "placeholders": {
+      "myName": {
+        "type": "String"
+      }
+    }
+  },
+  "address": "Saya tinggal di {city}, {country}",
+  "@address": {
+    "description": "Deskripsi variabel address",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      },
+      "country": {}
+    }
   }
 }

@@ -46,14 +46,26 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.titleApp),
+        // title: Text(AppLocalizations.of(context)!.titleApp),
+        title: Localizations.override(context: context,
+          locale: const Locale('id'),
+          child: Builder(
+            builder: (BuildContext context){
+              return Text(AppLocalizations.of(context)!.titleApp);
+            },
+          ),
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              AppLocalizations.of(context)!.helloWorld,
+              AppLocalizations.of(context)!.helloWorld("Dicoding"),
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            Text(
+              AppLocalizations.of(context)!.address("Bandung", 123),
               style: Theme.of(context).textTheme.headline4,
             ),
           ],

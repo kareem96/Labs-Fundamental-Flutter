@@ -1,4 +1,5 @@
 {
   "titleApp": "Localization App",
-  "helloWorld": "Hello World!"
+  "helloWorld": "Hello World! My name is {myName}",
+  "address": "I live in {city}, {country}"
 }
