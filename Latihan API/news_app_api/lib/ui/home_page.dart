@@ -1,16 +1,18 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app_api/data/api/api-service.dart';
+import 'package:news_app_api/provider/news_provider.dart';
 import 'package:news_app_api/ui/settings_page.dart';
 import 'package:news_app_api/widgets/platform_widget.dart';
+import 'package:provider/provider.dart';
 
 import 'article_list_page.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -22,14 +24,20 @@ class _HomePageState extends State<HomePage> {
   static const String _headlineText = 'Headline';
 
   final List<Widget> _listWidget = [
-    ArticleListPage(),
+
+    ///add provider
+    ChangeNotifierProvider<NewsProvider>(
+      create: (_) => NewsProvider(apiService: ApiService()),
+      child: ArticleListPage(),
+    ),
+    // ArticleListPage(),
     SettingsPage(),
   ];
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
-      icon: Icon(Platform.isIOS ? CupertinoIcons.news : Icons.public),
-      label: _headlineText
+        icon: Icon(Platform.isIOS ? CupertinoIcons.news : Icons.public),
+        label: _headlineText
     ),
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
@@ -37,13 +45,13 @@ class _HomePageState extends State<HomePage> {
     )
   ];
 
-  void _onBottomNavTapped(int index){
+  void _onBottomNavTapped(int index) {
     setState(() {
       _bottomNavIndex = index;
     });
   }
 
-  Widget _buildAndroid(BuildContext context){
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       body: _listWidget[_bottomNavIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -54,12 +62,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildIos(BuildContext context){
+  Widget _buildIos(BuildContext context) {
     return CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
           items: _bottomNavBarItems,
         ),
-        tabBuilder: (context, index){
+        tabBuilder: (context, index) {
           return _listWidget[index];
         }
     );
@@ -68,8 +76,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return PlatformWidget(
-        androidBuilder: _buildAndroid,
-        iosBuilder: _buildIos,
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIos,
     );
   }
 }
