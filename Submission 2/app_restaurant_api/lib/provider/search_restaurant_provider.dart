@@ -3,9 +3,6 @@
 
 
 
-
-// enum ResultState {Loading, NoData, HasData, Error}
-
 import 'dart:async';
 import 'dart:io';
 

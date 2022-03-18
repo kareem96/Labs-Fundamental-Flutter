@@ -135,7 +135,6 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
                                 height: 12.0,
                                 color: Colors.grey,
                               ),
-
                             ],
                           ),
                         )

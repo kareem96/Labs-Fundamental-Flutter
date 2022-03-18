@@ -26,7 +26,7 @@ class _RestaurantSearchState extends State<RestaurantSearch> {
   Widget _buildList(){
     Timer? _debounce;
     return Scaffold(
-      appBar: AppBar(title: Text('Search'),),
+      appBar: AppBar(title: const Text('Search'),),
       body: Column(
         children: [
           Flexible(
