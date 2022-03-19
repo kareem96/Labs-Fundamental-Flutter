@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app_api/provider/preferences_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/platform_widget.dart';
 
@@ -28,49 +32,75 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
-    return ListView(
-      children: [
-        Material(
-          child: ListTile(
-            title: const Text('Dark Theme'),
-            trailing: Switch.adaptive(
-                value: false,
-                onChanged: (value) {
-                  defaultTargetPlatform == TargetPlatform.iOS
-                      ? showCupertinoDialog(
-                          context: context,
-                          builder: (context) {
-                            return CupertinoAlertDialog(
-                              title: const Text('Coming soon'),
-                              content: const Text(
-                                  'This feature will be coming soon!'),
-                              actions: [
-                                CupertinoDialogAction(
-                                  child: const Text('OK'),
-                                  onPressed: () => Navigator.pop(context),
-                                )
-                              ],
-                            );
-                          })
-                      : showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Coming soon!'),
-                              content: const Text(
-                                  'This feature will be coming soon'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('OK'),
-                                )
-                              ],
-                            );
-                          });
-                }),
-          ),
-        )
-      ],
+    return Consumer<PreferencesProvider>(
+      builder: (context, provider, child) {
+        return ListView(
+          children: [
+            Material(
+              child: ListTile(
+                title: const Text('Dark Theme'),
+                trailing: Switch.adaptive(
+                    value: provider.isDarkTheme,
+                    onChanged: (value) {
+                      provider.enableDarkTheme(value);
+                      /*defaultTargetPlatform == TargetPlatform.iOS
+                          ? showCupertinoDialog(
+                              context: context,
+                              builder: (context) {
+                                return CupertinoAlertDialog(
+                                  title: const Text('Coming soon'),
+                                  content: const Text(
+                                      'This feature will be coming soon!'),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      child: const Text('OK'),
+                                      onPressed: () => Navigator.pop(context),
+                                    )
+                                  ],
+                                );
+                              })
+                          : showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Coming soon!'),
+                                  content: const Text(
+                                      'This feature will be coming soon'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('OK'),
+                                    )
+                                  ],
+                                );
+                              });*/
+                    }
+                    ),
+              ),
+            ),
+            /*Material(
+              child: ListTile(
+                title: Text('Scheduling News'),
+                trailing: Consumer<SchedulerProvider>(
+                  builder: (context, scheduled, _){
+                    return Switch.adaptive(
+                        value: provider.isDailyNewsActive,
+                        onChanged: (value) async{
+                          if(Platform.isIOS){
+                            customDialog(context);
+                          }else{
+                            scheduled.scheduledNews(value);
+                            provider.enableDailyNews(value);
+                          }
+                        }
+                    )
+                  },
+                ),
+              ),
+            )*/
+          ],
+        );
+      },
     );
   }
 

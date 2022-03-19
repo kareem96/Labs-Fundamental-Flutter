@@ -52,4 +52,14 @@ class Article {
         publishedAt: DateTime.parse(json["publishedAt"]),
         content: json["content"],
       );
+
+  Map<String, dynamic> toJson() => {
+    'author': author,
+    'title': title,
+    'description': description,
+    'url': url,
+    'urlToImage': urlToImage,
+    'publishedAt': publishedAt?.toIso8601String(),
+    'content': content
+  };
 }

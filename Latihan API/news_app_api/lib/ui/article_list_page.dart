@@ -6,7 +6,8 @@ import 'package:news_app_api/widgets/platform_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../data/api/api-service.dart';
-import '../data/model/article.dart';
+
+import '../utils/result_state.dart';
 
 
 /*
@@ -37,13 +38,13 @@ class ArticleListPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          ElevatedButton(
+          /*ElevatedButton(
             child: const Text('Refresh'),
             onPressed: () {
               NewsProvider(apiService: ApiService());
             },
-          ),
-          const SizedBox(height: 10,),
+          ),*/
+          // const SizedBox(height: 10,),
           Consumer<NewsProvider>(
             builder: (context, state, _) {
               if (state.state == ResultState.loading) {

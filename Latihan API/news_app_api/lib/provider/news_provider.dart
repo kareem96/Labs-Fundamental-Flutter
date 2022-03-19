@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:news_app_api/data/api/api-service.dart';
 import 'package:news_app_api/data/model/article.dart';
 
+import '../utils/result_state.dart';
+
 
 
 
 /*
 *
 */
-enum ResultState { loading, noData, hasData, error }
 
 class NewsProvider extends ChangeNotifier {
   final ApiService apiService;

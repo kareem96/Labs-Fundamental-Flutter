@@ -9,6 +9,7 @@ import 'package:news_app_api/widgets/platform_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'article_list_page.dart';
+import 'bookmarks_page.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -26,22 +27,29 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _listWidget = [
 
     ///add provider
-    ChangeNotifierProvider<NewsProvider>(
+    /*ChangeNotifierProvider<NewsProvider>(
       create: (_) => NewsProvider(apiService: ApiService()),
       child: ArticleListPage(),
-    ),
+    ),*/
     // ArticleListPage(),
+    ArticleListPage(),
     SettingsPage(),
+    BookmarksPage(),
   ];
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
         icon: Icon(Platform.isIOS ? CupertinoIcons.news : Icons.public),
-        label: _headlineText
+        label: _headlineText,
     ),
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
       label: SettingsPage.settingsTitle,
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS ? CupertinoIcons.bookmark :
+          Icons.collections_bookmark),
+      label: BookmarksPage.bookmarksTitle,
     )
   ];
 

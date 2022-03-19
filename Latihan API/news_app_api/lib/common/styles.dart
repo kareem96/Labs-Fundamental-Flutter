@@ -4,6 +4,67 @@ import 'package:google_fonts/google_fonts.dart';
 final Color primaryColor = Color(0xFFFFFFFF);
 final Color secondaryColor = Color(0xFF6B38FB);
 
+final Color darkPrimaryColor = Color(0xFF000000);
+final Color darkSecondaryColor = Color(0xFF64FFDA);
+
+/// lightTheme
+ThemeData lightTheme = ThemeData(
+  colorScheme: ThemeData.light().colorScheme.copyWith(
+    primary: primaryColor,
+    onPrimary: Colors.black,
+    secondary: secondaryColor
+  ),
+  scaffoldBackgroundColor: Colors.white,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  textTheme: myTextTheme,
+  appBarTheme: AppBarTheme(elevation: 0),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: secondaryColor,
+    unselectedItemColor: Colors.grey,
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      onPrimary: Colors.white,
+      primary: secondaryColor,
+      textStyle: const TextStyle(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(0),
+        ),
+      ),
+    ),
+  ),
+);
+
+/// darkTheme
+ThemeData darkTheme = ThemeData.dark().copyWith(
+  colorScheme: ThemeData.dark().colorScheme.copyWith(
+    primary: darkPrimaryColor,
+    onPrimary: Colors.black,
+    secondary: darkSecondaryColor,
+  ),
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  textTheme: myTextTheme,
+  appBarTheme: AppBarTheme(elevation: 0),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: darkSecondaryColor,
+    unselectedItemColor: Colors.grey,
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: secondaryColor,
+      onPrimary: Colors.white,
+      textStyle: TextStyle(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(0),
+        ),
+      ),
+    ),
+  ),
+);
+
+/// style text
 final TextTheme myTextTheme = TextTheme(
   headline1: GoogleFonts.merriweather(
       fontSize: 92, fontWeight: FontWeight.w300, letterSpacing: -1.5),
