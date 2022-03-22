@@ -35,7 +35,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
   }
 
 
-  Widget _buildDetails(BuildContext context){
+  /*Widget _buildDetails(BuildContext context){
     return Scaffold(
       body: Consumer<RestaurantDetailsProvider>(
         builder: (context, provider, _) {
@@ -147,7 +147,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
         },
       )
     );
-  }
+  }*/
 
   Widget _buildFoodMenu(BuildContext context, List<Food> foods){
     return Container(
@@ -206,17 +206,18 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
     );
   }
 
-  Widget _buildAndroid(BuildContext context){
+  /*Widget _buildAndroid(BuildContext context){
     return _buildDetails(context);
 
   }
 
   Widget _buildIos(BuildContext context){
     return _buildDetails(context);
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(androidBuilder: _buildAndroid, iosBuilder: _buildIos);
+    return Container();
+    /*return PlatformWidget(androidBuilder: _buildAndroid, iosBuilder: _buildIos);*/
   }
 }

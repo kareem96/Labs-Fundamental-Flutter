@@ -7,51 +7,51 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:app_restaurant_api/data/api/api_service.dart';
+import 'package:app_restaurant_api/data/model/restau.dart';
 import 'package:app_restaurant_api/data/response/restaurant_list_search.dart';
+import 'package:app_restaurant_api/ui/search_restaurant_page.dart';
 import 'package:app_restaurant_api/utils/state_result.dart';
 import 'package:flutter/cupertino.dart';
 
 class SearchProvider extends ChangeNotifier{
   final ApiService apiService;
 
-  SearchProvider({required this.apiService});
+  SearchProvider({required this.apiService}){
+    fetchSearchRestaurant(query);
+  }
+  String _query = '';
+  String get query => _query;
 
-  ResultState<RestaurantSearchResponse> _state = ResultState(
-    status: Status.hasData,
-    message: null,
-    data: RestaurantSearchResponse(
-        error: false,
-        founded: 0,
-        restaurant: [],
-    )
-  );
-
-  ResultState<RestaurantSearchResponse> get state => _state;
+  String _message = '';
+  String get message => _message;
 
 
-  Future<dynamic> fetchSearchRestaurant(String keyword) async{
+  RestaurantSearchResponse? _restaurantResultSearch;
+  RestaurantSearchResponse? get result => _restaurantResultSearch;
+
+  ResultState? _state;
+  ResultState? get state => _state;
+
+
+  Future<dynamic> fetchSearchRestaurant(String query) async{
     try{
-      _state = ResultState(status: Status.loading, message: null, data: null);
+      _state = ResultState.loading;
+      _query = query;
+
+      final restaurantSearch = await apiService.getSearch(query);
+      if(restaurantSearch.restaurants.isEmpty){
+        _state = ResultState.noData;
+        notifyListeners();
+        return _message = 'Restaurant Tidak dapat ditemukan';
+      }else{
+        _state = ResultState.hasData;
+        notifyListeners();
+        return _restaurantResultSearch = restaurantSearch;
+      }
+    } catch (e){
+      _state = ResultState.error;
       notifyListeners();
-      final RestaurantSearchResponse restaurantSearchResponse = await apiService.getSearch(keyword);
-      _state = ResultState(
-          status: Status.hasData,
-          message: null,
-          data: restaurantSearchResponse);
-      notifyListeners();
-      return _state;
-    } on TimeoutException{
-      _state = ResultState(status: Status.error, message: 'Request time out', data: null);
-      notifyListeners();
-      return _state;
-    }on SocketException{
-      _state = ResultState(status: Status.error, message: '', data: null);
-      notifyListeners();
-      return _state;
-    } on Error catch (e){
-      _state = ResultState(status: Status.error, message: e.toString(), data: null);
-      notifyListeners();
-      return _state;
+      return _message = 'Error -> $e';
     }
   }
 }

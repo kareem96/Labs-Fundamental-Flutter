@@ -1,12 +1,7 @@
-import 'package:app_restaurant_api/common/style.dart';
 import 'package:app_restaurant_api/data/model/restau.dart';
-import 'package:app_restaurant_api/data/response/restaurant_list_response.dart';
 import 'package:app_restaurant_api/provider/restaurant_provider.dart';
 import 'package:app_restaurant_api/ui/search_restaurant_page.dart';
 import 'package:app_restaurant_api/utils/state_result.dart';
-import 'package:app_restaurant_api/widgets/card_custom.dart';
-import 'package:app_restaurant_api/widgets/platform_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,79 +9,74 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   static const routeName = '/restaurants';
 
-  Widget _buildAndroid(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(''),
-      ),
-      body: _buildList(context),
-    );
-  }
-
-  Widget _buildIos(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text(''),
-        transitionBetweenRoutes: false,
-      ),
-      child: _buildList(context),
-    );
-  }
-
-
-  Widget _buildList(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Consumer<RestaurantProvider>(
-            builder: (context, provider, _) {
-              ResultState<RestaurantListResponse> state = provider.state;
-              switch (state.status) {
-                case Status.loading:
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                case Status.error:
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(
-                        16.0,
-                      ),
-                      child: Text(
-                        state.message!,
-                      ),
-                    ),
-                  );
-                case Status.hasData:
-                  return ListView.builder(
-                      itemCount: state.data?.restaurants.length,
-                      itemBuilder: (context, index){
-                        var restaurant = state.data?.restaurants[index];
-                        return CardCustom(restaurant: restaurant!);
-                      }
-                  );
-                /*{
-                    Restaurant restaurants = state.data!.restaurants;
-                    if (restaurants.isEmpty) {
-                      return const Center(
-                        child: Text('Restaurant is empty.'),
-                      );
-                    } else {
-                      return CardCustom(restaurant: restaurants,
-                      );
-                    }
-                  }*/
-              }
-            },
-          )
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: const Text("Restaurant"),
+        centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                RestaurantSearch.routeName,
+              );
+            },
+          ),
+
+        ],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child:
+            Consumer<RestaurantProvider>(builder: (context, state, _) {
+              if (state.state == ResultState.loading) {
+                //loading widget
+                return const Center(child: CircularProgressIndicator());
+              } else if (state.state == ResultState.error) {
+                // error widget
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "images/connection.png",
+                        width: 50,
+                      ),
+                      const Text(
+                        " Gagal Memuat Data\nHarap Periksa Koneksi Internet kamu",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                    ],
+                  ),
+                );
+              } else if (state.state == ResultState.noData) {
+                // error No Data
+                return Center(child: Text(state.message));
+              } else if (state.state == ResultState.hasData) {
+                return ListView.builder(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount: state.restaurants.count,
+                    itemBuilder: (context, index) {
+                      var resto = state.restaurants.restaurants;
+                      return buildListItem(resto[index], context);
+                    });
+              } else {
+                return Text("");
+              }
+            }),
+          ),
+        ],
+      ),
+    );
+    /*return Scaffold(
       appBar: AppBar(
         title: const Text('Restaurant',),
         bottom: PreferredSize(
@@ -121,6 +111,100 @@ class HomePage extends StatelessWidget {
       body: PlatformWidget(
         androidBuilder: _buildAndroid,
         iosBuilder: _buildIos,
+      ),
+    );*/
+  }
+
+  Widget buildListItem(Restaurants resto, BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(2, 1),
+              blurRadius: 10,
+            ),
+          ]),
+      child: Stack(
+        children: [
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  "https://restaurant-api.dicoding.dev/images/medium/" +
+                      resto.pictureId,
+                  width: 100,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      resto.name,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.share_location,
+                              color: Colors.redAccent[100],
+                              size: 20,
+                            ),
+                            Text(resto.city),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.yellow,
+                              size: 20,
+                            ),
+                            Text(resto.rating.toString())
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          /*Positioned(
+              bottom: 3,
+              right: 20,
+              child: OutlinedButton(
+                  style: ButtonStyle(
+                      side: MaterialStateProperty.all(
+                        BorderSide(color: HomeColor),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      )),
+                  onPressed: () {
+                    Navigation.intentWithData("/detail_screen", resto);
+                    // Navigator.pushNamed(context, "/detail_screen",
+                    //     arguments: resto.id);
+                  },
+                  child: Text(
+                    "view",
+                    style: TextStyle(color: HomeColor),
+                  )))*/
+        ],
       ),
     );
   }

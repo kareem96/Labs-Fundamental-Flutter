@@ -5,7 +5,7 @@ class RestaurantListResponse {
    bool error;
    String message;
    int count;
-   List<Restaurant> restaurants;
+   List<Restaurants> restaurants;
 
   RestaurantListResponse({
     required this.error,
@@ -18,31 +18,15 @@ class RestaurantListResponse {
     message: json['message'],
     count: json['count'],
     error: json['error'],
-    restaurants: List<Restaurant>.from((json['restaurants'] as List)
-        .map((e) => Restaurant.fromJson(e))
-        .where((restaurant) =>
-          restaurant.id != null &&
-          restaurant.name != null &&
-          restaurant.description != null &&
-          restaurant.address != null &&
-          restaurant.city != null &&
-          restaurant.pictureId != null)),
+    restaurants: List<Restaurants>.from(
+      json['restaurants'].map((x) => Restaurants.fromJson(x)),
+    ),
   );
 
-
-  /*factory RestaurantListResponse.fromJson(Map<String, dynamic> json) {
-    final bool error = json['error'];
-    final String message = json['message'];
-    final int count = json['count'];
-    final List<Restaurant> restaurants = (json['restaurants'] as List)
-        .map((restaurantJson) => Restaurant.fromJson(restaurantJson))
-        .toList();
-
-    return RestaurantListResponse(
-      error: error,
-      message: message,
-      count: count,
-      restaurants: restaurants,
-    );
-  }*/
+  Map<String, dynamic> toJson() => {
+      'error': error,
+      'message': message,
+      'count': count,
+      'restaurants': List<dynamic>.from(restaurants.map((e) => e.toJson())),
+  };
 }

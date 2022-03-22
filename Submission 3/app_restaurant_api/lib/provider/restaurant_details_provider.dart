@@ -9,36 +9,39 @@ import 'package:app_restaurant_api/utils/state_result.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantDetailsProvider extends ChangeNotifier{
-  final ApiService apiService;
+  late final ApiService apiService;
+  String id;
 
-  RestaurantDetailsProvider({required this.apiService});
+  RestaurantDetailsProvider({required this.apiService, required this.id});
 
-  ResultState<RestaurantDetailsResponse> _state = ResultState(status: Status.loading, message: null, data: null);
-  ResultState<RestaurantDetailsResponse> get state => _state;
+  late RestaurantDetailsResponse _restaurantDetailsResponse;
+  RestaurantDetailsResponse get result => _restaurantDetailsResponse;
 
-  Future<ResultState> getDetails(String id) async {
-    try {
-      _state = ResultState(status: Status.loading, message: null, data: null);
+  String _message = '';
+  String get message => _message;
+
+  late ResultState _state;
+  ResultState get state => _state;
+
+
+  Future<dynamic> getDetails(String id) async {
+    try{
+      _state = ResultState.loading;
       notifyListeners();
-      final RestaurantDetailsResponse restaurantDetailResponse = await apiService.getDetails(id);
-      _state = ResultState(status: Status.hasData, message: null, data: restaurantDetailResponse);
+      final restaurants = await apiService.getDetails(id);
+      if(restaurants.restaurant.id.isEmpty){
+        _state = ResultState.noData;
+        notifyListeners();
+        return _message = 'Not Found Data';
+      }else{
+        _state = ResultState.hasData;
+        notifyListeners();
+        return _restaurantDetailsResponse = restaurants;
+      }
+    }catch (e){
+      _state = ResultState.error;
       notifyListeners();
-      return _state;
-    } on TimeoutException {
-      _state = ResultState(
-          status: Status.error, message: 'timeoutExceptionMessage', data: null);
-      notifyListeners();
-      return _state;
-    } on SocketException {
-      _state = ResultState(
-          status: Status.error, message: 'socketExceptionMessage', data: null);
-      notifyListeners();
-      return _state;
-    } on Error catch (e) {
-      _state =
-          ResultState(status: Status.error, message: e.toString(), data: null);
-      notifyListeners();
-      return _state;
+      return _message = 'Error -> $e';
     }
   }
 }

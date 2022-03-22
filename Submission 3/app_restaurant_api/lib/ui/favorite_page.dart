@@ -12,15 +12,21 @@ class FavoritePage extends StatelessWidget {
 
   const FavoritePage({Key? key}) : super(key: key);
 
-  Widget _buildAndroid(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
+  /*Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(favoriteTitle),
       ),
-      body: _buildList(),
+      *//*body: _buildList(),*//*
     );
-  }
-
+  */}
+/*
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -28,9 +34,9 @@ class FavoritePage extends StatelessWidget {
       ),
       child: _buildList(),
     );
-  }
+  }*/
 
-  Widget _buildList() {
+  /*Widget _buildList() {
     return Consumer<DatabaseProvider>(
       builder: (context, provider, child) {
         if (provider.state == ResultStatus.hasData) {
@@ -47,14 +53,5 @@ class FavoritePage extends StatelessWidget {
         }
       },
     );
-  }
+  }*/
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIos,
-    );
-  }
-}

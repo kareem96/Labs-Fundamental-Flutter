@@ -37,9 +37,9 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<SearchProvider>(
             create: (_) => SearchProvider(apiService: _apiService),
           ),
-          ChangeNotifierProvider<RestaurantDetailsProvider>(
+          /*ChangeNotifierProvider<RestaurantDetailsProvider>(
               create: (_) =>
-                  RestaurantDetailsProvider(apiService: _apiService)),
+                  RestaurantDetailsProvider(apiService: _apiService)),*/
           ChangeNotifierProvider<DatabaseProvider>(
               create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()),
           )

@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 
 class CardCustom extends StatefulWidget {
   // final List<Restaurant> restaurant;
-  final Restaurant restaurant;
-  const CardCustom({Key? key, required this.restaurant}) : super(key: key);
+  final Restaurants restaurants;
+  const CardCustom({Key? key, required this.restaurants}) : super(key: key);
 
   @override
   _CardCustomState createState() => _CardCustomState();
@@ -76,44 +76,44 @@ class _CardCustomState extends State<CardCustom> {
     return Consumer<DatabaseProvider>(
       builder: (context, provider, snapshot){
         return FutureBuilder<bool>(
-          future: provider.isFavorited(widget.restaurant.id),
+          future: provider.isFavorited(widget.restaurants.id),
           builder: (context, snapshot){
             var isFavorited = snapshot.data ?? false;
             return Material(
               child:  ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 leading: Hero(
-                  tag: widget.restaurant.id,
-                  child: Image.network(widget.restaurant.mediumPictureUrl),
+                  tag: widget.restaurants.id,
+                  child: Image.network(widget.restaurants.pictureId),
                 ),
                 onTap: () => {
-                  Navigation.intentWithData(RestaurantDetail.routeName, widget.restaurant.id),
+                  Navigation.intentWithData(RestaurantDetail.routeName, widget.restaurants.id),
                 },
-                title: Text(widget.restaurant.name, overflow: TextOverflow.ellipsis,),
+                title: Text(widget.restaurants.name, overflow: TextOverflow.ellipsis,),
                 subtitle: Column(
                   children: [
                     Row(
                       children: [
-                        Text(widget.restaurant.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
+                        Text(widget.restaurants.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
                       ],
                     ),
                     Row(
                       children: [
-                        Text(widget.restaurant.city)
+                        Text(widget.restaurants.city)
                       ],
                     ),
                     Row(
                       children: [
-                        Text(widget.restaurant.rating.toString()),
+                        Text(widget.restaurants.rating.toString()),
                       ],
                     ),
                   ],
                 ),
                 trailing: isFavorited
-                    ? IconButton(onPressed: () => provider.removeFavorite(widget.restaurant.id),
+                    ? IconButton(onPressed: () => provider.removeFavorite(widget.restaurants.id),
                     color: Theme.of(context).accentColor,
                     icon: Icon(Icons.favorite))
-                    : IconButton(onPressed: () => provider.addFavorite(widget.restaurant),
+                    : IconButton(onPressed: () => provider.addFavorite(widget.restaurants),
                     color: Theme.of(context).accentColor,
                     icon: Icon(Icons.favorite_border)),
               ),

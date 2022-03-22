@@ -1,27 +1,27 @@
-
-
-
 import 'package:app_restaurant_api/data/model/restau.dart';
 
-class RestaurantSearchResponse{
-   bool error;
-   int founded;
-   List<Restaurant> restaurant;
+class RestaurantSearchResponse {
+  bool error;
+  int founded;
+  List<Restaurants> restaurants;
 
   RestaurantSearchResponse({
     required this.error,
     required this.founded,
-    required this.restaurant,});
+    required this.restaurants,
+  });
 
-  factory RestaurantSearchResponse.fromJson(Map<String, dynamic> json) => RestaurantSearchResponse(
-    error: json['error'],
-    founded: json['founded'],
-    restaurant: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
-  );
+  factory RestaurantSearchResponse.fromJson(Map<String, dynamic> json) =>
+      RestaurantSearchResponse(
+        error: json['error'],
+        founded: json['founded'],
+        restaurants: List<Restaurants>.from(
+            json["restaurants"].map((x) => Restaurants.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    'error': error,
-    'founded':founded,
-    'restaurants':List<dynamic>.from(restaurant.map((x) => x.toJson()))
-  };
+        'error': error,
+        'founded': founded,
+        'restaurants': List<dynamic>.from(restaurants.map((x) => x.toJson()))
+      };
 }

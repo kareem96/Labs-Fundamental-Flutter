@@ -1,10 +1,10 @@
 
 
-enum Status{loading, hasData, error}
+// enum Status{loading, hasData, error}
 
-enum ResultStatus{loading, noData, hasData, error}
+enum ResultState{loading, noData, hasData, error}
 
-class ResultState<T>{
+/*class ResultState<T>{
   final Status status;
   final String? message;
   final T? data;
@@ -14,4 +14,4 @@ class ResultState<T>{
     required this.message,
     required this.data
   });
-}
+}*/

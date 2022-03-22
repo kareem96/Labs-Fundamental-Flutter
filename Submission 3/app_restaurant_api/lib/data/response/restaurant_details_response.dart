@@ -6,7 +6,7 @@ import 'package:app_restaurant_api/data/model/restau.dart';
 class RestaurantDetailsResponse{
   bool error;
   String message;
-  Restaurant restaurant;
+  Restaurants restaurant;
 
   RestaurantDetailsResponse({
     required this.error,
@@ -17,12 +17,12 @@ class RestaurantDetailsResponse{
   factory RestaurantDetailsResponse.fromJson(Map<String, dynamic> json) => RestaurantDetailsResponse(
       error: json['error'],
       message: json['message'],
-      restaurant: Restaurant.fromJson(json['restaurant']),
+      restaurant: Restaurants.fromJson(json['restaurant']),
   );
 
   Map<String, dynamic> toJson() => {
     'error': error,
     'message': message,
-    'restaurant': restaurant,
+    'restaurant': restaurant.toJson(),
   };
 }
