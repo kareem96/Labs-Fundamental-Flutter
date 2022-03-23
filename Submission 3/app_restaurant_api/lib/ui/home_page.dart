@@ -1,7 +1,10 @@
 import 'package:app_restaurant_api/data/model/restau.dart';
 import 'package:app_restaurant_api/provider/restaurant_provider.dart';
+import 'package:app_restaurant_api/ui/detail_page.dart';
 import 'package:app_restaurant_api/ui/search_restaurant_page.dart';
+import 'package:app_restaurant_api/utils/constants.dart';
 import 'package:app_restaurant_api/utils/state_result.dart';
+import 'package:app_restaurant_api/widgets/card_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,15 +29,13 @@ class HomePage extends StatelessWidget {
               );
             },
           ),
-
         ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child:
-            Consumer<RestaurantProvider>(builder: (context, state, _) {
+            child: Consumer<RestaurantProvider>(builder: (context, state, _) {
               if (state.state == ResultState.loading) {
                 //loading widget
                 return const Center(child: CircularProgressIndicator());
@@ -65,8 +66,18 @@ class HomePage extends StatelessWidget {
                     physics: ScrollPhysics(),
                     itemCount: state.restaurants.count,
                     itemBuilder: (context, index) {
-                      var resto = state.restaurants.restaurants;
-                      return buildListItem(resto[index], context);
+                      final response = state.restaurants.restaurants[index];
+                      return CardCustom(
+                          pictureId: smallImageUrl + response.pictureId,
+                          name: response.name,
+                          city: response.city,
+                          rating: response.rating,
+                          onPress: () {
+                            Navigator.pushNamed(
+                                context, RestaurantDetail.routeName,
+                                arguments: response.id);
+                          });
+                      // return buildListItem(resto[index], context);
                     });
               } else {
                 return Text("");

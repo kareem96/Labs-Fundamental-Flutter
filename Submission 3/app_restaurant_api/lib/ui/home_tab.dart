@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:app_restaurant_api/ui/detail_page.dart';
 import 'package:app_restaurant_api/ui/home_page.dart';
 import 'package:app_restaurant_api/ui/settings_page.dart';
+import 'package:app_restaurant_api/utils/notification_helper.dart';
 import 'package:app_restaurant_api/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,8 @@ class _HomeTabState extends State<HomeTab> {
     SettingsPage(),
   ];
 
+  final NotificationHelper _notificationHelper = NotificationHelper();
+
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.home : Icons.home),
@@ -33,11 +37,12 @@ class _HomeTabState extends State<HomeTab> {
     ),
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.square_favorites_alt : Icons.favorite),
-      label: FavoritePage.favoriteTitle,
+      label: 'Favorite'
     ),
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
       label: SettingsPage.settingsTitle,
+
     ),
   ];
 
@@ -75,5 +80,18 @@ class _HomeTabState extends State<HomeTab> {
         androidBuilder: _buildAndroid,
         iosBuilder: _buildIos,
     );
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    _notificationHelper.configureSelectNotificationSubject(RestaurantDetail.routeName);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    selectNotificationSubject.close();
   }
 }

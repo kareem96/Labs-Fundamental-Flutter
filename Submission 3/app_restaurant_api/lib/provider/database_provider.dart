@@ -9,11 +9,11 @@ class DatabaseProvider extends ChangeNotifier{
   final DatabaseHelper databaseHelper;
 
   DatabaseProvider({required this.databaseHelper}){
-    _getFavorite();
+    getFavorite();
   }
 
-  late ResultState _state;
-  ResultState get state => _state;
+  ResultState? _state;
+  ResultState? get state => _state;
 
   String _message = '';
   String get message => _message;
@@ -21,9 +21,9 @@ class DatabaseProvider extends ChangeNotifier{
   List<Restaurants> _favorite = [];
   List<Restaurants> get favorite => _favorite;
 
-  void _getFavorite() async{
+  void getFavorite() async{
     _favorite = await databaseHelper.getFavorite();
-    if(_favorite.length > 0){
+    if(_favorite.isNotEmpty){
       _state = ResultState.hasData;
     }else{
       _state = ResultState.noData;
@@ -35,7 +35,7 @@ class DatabaseProvider extends ChangeNotifier{
   void addFavorite(Restaurants restaurants) async{
     try{
       await databaseHelper.insertFavorite(restaurants);
-      _getFavorite();
+      getFavorite();
     }catch (e){
       _state = ResultState.error;
       _message = 'Error $e';
@@ -51,7 +51,7 @@ class DatabaseProvider extends ChangeNotifier{
   void removeFavorite(String id)async{
     try{
       await databaseHelper.removeFavorite(id);
-      _getFavorite();
+      getFavorite();
     }catch (e){
       _state = ResultState.error;
       _message = 'Error $e';

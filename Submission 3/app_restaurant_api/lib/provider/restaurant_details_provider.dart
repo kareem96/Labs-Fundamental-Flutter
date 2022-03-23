@@ -9,10 +9,9 @@ import 'package:app_restaurant_api/utils/state_result.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantDetailsProvider extends ChangeNotifier{
-  late final ApiService apiService;
-  String id;
+  final ApiService apiService;
 
-  RestaurantDetailsProvider({required this.apiService, required this.id});
+  RestaurantDetailsProvider({required this.apiService,});
 
   late RestaurantDetailsResponse _restaurantDetailsResponse;
   RestaurantDetailsResponse get result => _restaurantDetailsResponse;
@@ -20,8 +19,8 @@ class RestaurantDetailsProvider extends ChangeNotifier{
   String _message = '';
   String get message => _message;
 
-  late ResultState _state;
-  ResultState get state => _state;
+  ResultState? _state;
+  ResultState? get state => _state;
 
 
   Future<dynamic> getDetails(String id) async {

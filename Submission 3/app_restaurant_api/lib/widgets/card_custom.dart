@@ -1,25 +1,103 @@
-
-
-
 import 'package:app_restaurant_api/common/navigation.dart';
 import 'package:app_restaurant_api/data/model/restau.dart';
 import 'package:app_restaurant_api/provider/database_provider.dart';
 import 'package:app_restaurant_api/ui/detail_page.dart';
+import 'package:app_restaurant_api/utils/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class CardCustom extends StatefulWidget {
-  // final List<Restaurant> restaurant;
-  final Restaurants restaurants;
-  const CardCustom({Key? key, required this.restaurants}) : super(key: key);
+  final String pictureId;
+  final String name;
+  final String city;
+  final double rating;
+  final Function() onPress;
+
+  const CardCustom({
+    Key? key,
+    required this.pictureId,
+    required this.name,
+    required this.city,
+    required this.rating,
+    required this.onPress,
+  }) : super(key: key);
 
   @override
   _CardCustomState createState() => _CardCustomState();
 }
 
 class _CardCustomState extends State<CardCustom> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8.0),
+      child: Material(
+        child: InkWell(
+          onTap: widget.onPress,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: widget.pictureId,
+                    height: 50,
+                    width: 70,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(widget.name),
+                      Text(widget.city),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.rating.toString(),
+                            style: blackTextStyle.copyWith(
+                              fontSize: 14,
+                              fontWeight: medium,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          RatingBar.builder(
+                              allowHalfRating: true,
+                              ignoreGestures: true,
+                              minRating: 1,
+                              maxRating: 5,
+                              itemCount: 5,
+                              itemSize: 14,
+                              initialRating: widget.rating,
+                              itemBuilder: (context, _) =>
+                                  const Icon(Icons.star),
+                              onRatingUpdate: (rating) {})
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
-  /*Widget _buildItemList(BuildContext context , Restaurant restaurant){
+/*Widget _buildItemList(BuildContext context , Restaurant restaurant){
     return Consumer<DatabaseProvider>(
       builder: (context, provider, snapshot){
         return FutureBuilder<bool>(
@@ -71,66 +149,4 @@ class _CardCustomState extends State<CardCustom> {
     );
   }*/
 
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<DatabaseProvider>(
-      builder: (context, provider, snapshot){
-        return FutureBuilder<bool>(
-          future: provider.isFavorited(widget.restaurants.id),
-          builder: (context, snapshot){
-            var isFavorited = snapshot.data ?? false;
-            return Material(
-              child:  ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                leading: Hero(
-                  tag: widget.restaurants.id,
-                  child: Image.network(widget.restaurants.pictureId),
-                ),
-                onTap: () => {
-                  Navigation.intentWithData(RestaurantDetail.routeName, widget.restaurants.id),
-                },
-                title: Text(widget.restaurants.name, overflow: TextOverflow.ellipsis,),
-                subtitle: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(widget.restaurants.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(widget.restaurants.city)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(widget.restaurants.rating.toString()),
-                      ],
-                    ),
-                  ],
-                ),
-                trailing: isFavorited
-                    ? IconButton(onPressed: () => provider.removeFavorite(widget.restaurants.id),
-                    color: Theme.of(context).accentColor,
-                    icon: Icon(Icons.favorite))
-                    : IconButton(onPressed: () => provider.addFavorite(widget.restaurants),
-                    color: Theme.of(context).accentColor,
-                    icon: Icon(Icons.favorite_border)),
-              ),
-            );
-          },
-        );
-      },
-    );
-    /*return ListView.separated(
-        itemCount: widget.restaurant.length,
-        separatorBuilder: (context, index){
-          return const Divider(height: 2, color: Colors.grey,);
-        },
-        itemBuilder: (context, index){
-          Restaurant restaurant = widget.restaurant[index];
-          return _buildItemList(context, restaurant);
-        },
-    );*/
-  }
 }
