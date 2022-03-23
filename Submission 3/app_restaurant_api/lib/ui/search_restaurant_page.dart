@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:app_restaurant_api/data/model/restau.dart';
-import 'package:app_restaurant_api/data/response/restaurant_list_search.dart';
+
 import 'package:app_restaurant_api/provider/search_restaurant_provider.dart';
 import 'package:app_restaurant_api/utils/state_result.dart';
-import 'package:app_restaurant_api/widgets/card_custom.dart';
-import 'package:app_restaurant_api/widgets/platform_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -91,7 +90,6 @@ class _RestaurantSearchState extends State<RestaurantSearch> {
                             state.fetchSearchRestaurant(value);
                           }
                         },
-                        // cursorColor: SearchColor,
                         decoration: InputDecoration(
                             hintText: "Cari Restoran",
                             border: InputBorder.none),
@@ -121,33 +119,7 @@ class _RestaurantSearchState extends State<RestaurantSearch> {
             ),
           ),
         ],
-      )
-          /*Flexible(
-              flex: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: TextField(
-                  decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                      label: Text('Search'),
-                      hintText: 'Input type name restaurant',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(16))
-                      )
-                  ),
-                  onChanged: (text){
-                    if(_debounce?.isActive ?? false) _debounce!.cancel();
-                    _debounce = Timer(const Duration(milliseconds: 500), () {
-                      if(text.isNotEmpty){
-                        SearchProvider provider = Provider.of(context, listen: false);
-                        // provider.fetchSearchRestaurant(text);
-                      }
-                    });
-                  },
-                ),
-              )
-          ),*/
-          ),
+      )),
     );
   }
 
@@ -220,27 +192,6 @@ class _RestaurantSearchState extends State<RestaurantSearch> {
               )
             ],
           ),
-          /*Positioned(
-              bottom: 3,
-              right: 20,
-              child: OutlinedButton(
-                  style: ButtonStyle(
-                      side: MaterialStateProperty.all(
-                        BorderSide(color: HomeColor),
-                      ),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                      )),
-                  onPressed: () {
-                    Navigation.intentWithData("/detail_screen", resto);
-                    // Navigator.pushNamed(context, "/detail_screen",
-                    //     arguments: resto.id);
-                  },
-                  child: Text(
-                    "view",
-                    style: TextStyle(color: HomeColor),
-                  )))*/
         ],
       ),
     );

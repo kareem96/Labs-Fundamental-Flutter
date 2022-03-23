@@ -75,9 +75,8 @@ class HomePage extends StatelessWidget {
                           onPress: () {
                             Navigator.pushNamed(
                                 context, RestaurantDetail.routeName,
-                                arguments: response.id);
+                                arguments: response);
                           });
-                      // return buildListItem(resto[index], context);
                     });
               } else {
                 return Text("");
@@ -87,43 +86,6 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
-    /*return Scaffold(
-      appBar: AppBar(
-        title: const Text('Restaurant',),
-        bottom: PreferredSize(
-          child: Container(
-            padding: const EdgeInsets.only(
-              left: 14.0,
-              bottom: 12.0,
-            ),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Recommended restaurant for you!',
-              style: myTextTheme.subtitle2!.copyWith(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          preferredSize: const Size.fromHeight(10.0),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                RestaurantSearch.routeName,
-              );
-            },
-          ),
-
-        ],
-      ),
-      body: PlatformWidget(
-        androidBuilder: _buildAndroid,
-        iosBuilder: _buildIos,
-      ),
-    );*/
   }
 
   Widget buildListItem(Restaurants resto, BuildContext context) {
@@ -179,7 +141,7 @@ class HomePage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.star,
                               color: Colors.yellow,
                               size: 20,
@@ -194,27 +156,6 @@ class HomePage extends StatelessWidget {
               )
             ],
           ),
-          /*Positioned(
-              bottom: 3,
-              right: 20,
-              child: OutlinedButton(
-                  style: ButtonStyle(
-                      side: MaterialStateProperty.all(
-                        BorderSide(color: HomeColor),
-                      ),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                      )),
-                  onPressed: () {
-                    Navigation.intentWithData("/detail_screen", resto);
-                    // Navigator.pushNamed(context, "/detail_screen",
-                    //     arguments: resto.id);
-                  },
-                  child: Text(
-                    "view",
-                    style: TextStyle(color: HomeColor),
-                  )))*/
         ],
       ),
     );

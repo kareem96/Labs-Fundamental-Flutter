@@ -4,12 +4,8 @@
 
 
 import 'dart:async';
-import 'dart:io';
-
 import 'package:app_restaurant_api/data/api/api_service.dart';
-import 'package:app_restaurant_api/data/model/restau.dart';
 import 'package:app_restaurant_api/data/response/restaurant_list_search.dart';
-import 'package:app_restaurant_api/ui/search_restaurant_page.dart';
 import 'package:app_restaurant_api/utils/state_result.dart';
 import 'package:flutter/cupertino.dart';
 

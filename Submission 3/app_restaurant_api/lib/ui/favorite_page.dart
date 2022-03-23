@@ -57,7 +57,7 @@ class FavoritePage extends StatelessWidget {
                   rating: result.rating,
                   onPress: () {
                     Navigator.pushNamed(context, RestaurantDetail.routeName,
-                        arguments: result.id);
+                        arguments: result);
                   });
             },
           );

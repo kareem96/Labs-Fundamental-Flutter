@@ -19,7 +19,7 @@ class NotificationHelper {
   Future<void> initNotifications(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var initializationSettingsAndroid =
-        const AndroidInitializationSettings('ic_launcher');
+        const AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = const IOSInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
@@ -40,7 +40,7 @@ class NotificationHelper {
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
       RestaurantListResponse response) async {
     var _channelId = '1';
-    var _channelName = 'channel_1';
+    var _channelName = 'channel_01';
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         _channelId, _channelName,
@@ -58,11 +58,13 @@ class NotificationHelper {
     var titleNotifications = 'Restaurant Find';
     var titleNews = response.restaurants[0].name;
 
-    await flutterLocalNotificationsPlugin.show(0, titleNotifications, titleNews, platformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0, titleNotifications, titleNews, platformChannelSpecifics,
+        payload: json.encode(response));
   }
 
-  void configureSelectNotificationSubject(String route){
-    selectNotificationSubject.stream.listen((String payload) async{
+  void configureSelectNotificationSubject(String route) {
+    selectNotificationSubject.stream.listen((String payload) async {
       var data = RestaurantListResponse.fromJson(json.decode(payload));
       var article = data.restaurants[0];
       Navigation.intentWithData(route, article);

@@ -19,43 +19,46 @@ class FavoriteButton extends StatelessWidget {
             var isFavorite = snapshot.data ?? false;
             return isFavorite
                 ? InkWell(
-              onTap: () {
-                provider.removeFavorite(favorite.id);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Remove to Favorite'), duration: Duration(milliseconds: 500),));
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: kBlueColor,
-                ),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                child: const Icon(
-                  Icons.favorite_rounded,
-                  color: Colors.white,
-                ),
-              ),
-            )
+                    onTap: () {
+                      provider.removeFavorite(favorite.id);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Remove to Favorite'),
+                        duration: Duration(milliseconds: 500),
+                      ));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kBlueColor,
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
+                      child: const Icon(
+                        Icons.favorite_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
                 : InkWell(
-              onTap: () {
-                provider.addFavorite(favorite);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Add to Favorite'), duration: Duration(milliseconds: 500)));
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: kBlueColor,
-                ),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                child: const Icon(
-                  Icons.favorite_outline_rounded,
-                  color: Colors.white,
-                ),
-              ),
-            );
+                    onTap: () {
+                      provider.addFavorite(favorite);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Add to Favorite'),
+                          duration: Duration(milliseconds: 500)));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kBlueColor,
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
+                      child: const Icon(
+                        Icons.favorite_outline_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
           },
         );
       },

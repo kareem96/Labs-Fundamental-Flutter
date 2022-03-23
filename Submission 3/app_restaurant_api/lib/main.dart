@@ -4,6 +4,7 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:app_restaurant_api/common/navigation.dart';
 import 'package:app_restaurant_api/data/api/api_service.dart';
 import 'package:app_restaurant_api/data/local/database_helper.dart';
+import 'package:app_restaurant_api/data/model/restau.dart';
 import 'package:app_restaurant_api/provider/database_provider.dart';
 import 'package:app_restaurant_api/provider/preference_provider.dart';
 import 'package:app_restaurant_api/provider/restaurant_details_provider.dart';
@@ -25,16 +26,17 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final NotificationHelper _notificationHelper = NotificationHelper();
   final BackgroundService _service = BackgroundService();
 
   _service.initializedIsolate();
-  if(Platform.isAndroid){
+
+  if (Platform.isAndroid) {
     await AndroidAlarmManager.initialize();
   }
   await _notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
@@ -52,8 +54,7 @@ class _MyAppState extends State<MyApp> {
   final ApiService _apiService = ApiService();
 
   @override
-  Widget build(BuildContext context) =>
-      MultiProvider(
+  Widget build(BuildContext context) => MultiProvider(
         providers: [
           ChangeNotifierProvider<RestaurantProvider>(
               create: (_) => RestaurantProvider(apiService: _apiService)),
@@ -67,47 +68,43 @@ class _MyAppState extends State<MyApp> {
             create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()),
           ),
           ChangeNotifierProvider(
-              create: (_) => PreferenceProvider(preferenceHelper: PreferenceHelper(
-                sharedPreferences: SharedPreferences.getInstance()
-              ))
-          ),
-          ChangeNotifierProvider(create: (_) => SchedulingProvider()),
+              create: (_) => PreferenceProvider(
+                  preferenceHelper: PreferenceHelper(
+                      sharedPreferences: SharedPreferences.getInstance()))),
+          ChangeNotifierProvider<SchedulingProvider>(
+              create: (_) => SchedulingProvider()),
         ],
         child: Consumer<PreferenceProvider>(
-          builder: (context, provider, child){
+          builder: (context, provider, child) {
             return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Resataurant',
-              theme: provider.themeData,
-              builder: (context, child){
-                return CupertinoTheme(
-                    data: CupertinoThemeData(
-                      brightness: provider.isDarkTheme ? Brightness.dark : Brightness.light,
-                    ),
-                    child: Material(
-                      child: child,
-                    )
-                );
-              },
-              navigatorKey: navigatorKey,
-              initialRoute: SplashScreen.routeName,
-              routes: {
-                SplashScreen.routeName: (context) => const SplashScreen(),
-                HomeTab.routeName: (context) => const HomeTab(),
-                FavoritePage.routeName: (context) => const FavoritePage(),
-                RestaurantSearch.routeName: (
-                    context) => const RestaurantSearch(),
-                RestaurantDetail.routeName: (context) =>
-                    RestaurantDetail(
-                      restaurant:
-                      ModalRoute
-                          .of(context)
-                          ?.settings
-                          .arguments as String,
-                    ),
-                SettingsPage.routeName: (context) => const SettingsPage(),
-              }
-            );
+                debugShowCheckedModeBanner: false,
+                title: 'Restaurant',
+                theme: provider.themeData,
+                builder: (context, child) {
+                  return CupertinoTheme(
+                      data: CupertinoThemeData(
+                        brightness: provider.isDarkTheme
+                            ? Brightness.dark
+                            : Brightness.light,
+                      ),
+                      child: Material(
+                        child: child,
+                      ));
+                },
+                navigatorKey: navigatorKey,
+                initialRoute: SplashScreen.routeName,
+                routes: {
+                  SplashScreen.routeName: (context) => const SplashScreen(),
+                  HomeTab.routeName: (context) => const HomeTab(),
+                  FavoritePage.routeName: (context) => const FavoritePage(),
+                  RestaurantSearch.routeName: (context) =>
+                      const RestaurantSearch(),
+                  RestaurantDetail.routeName: (context) => RestaurantDetail(
+                        restaurant: ModalRoute.of(context)?.settings.arguments
+                            as Restaurants,
+                      ),
+                  SettingsPage.routeName: (context) => const SettingsPage(),
+                });
           },
         ),
       );

@@ -22,13 +22,12 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   int _bottomNavIndex = 0;
   static const String _headlineText = 'Home';
+  final NotificationHelper _notificationHelper = NotificationHelper();
   final List<Widget> _listWidget = [
     HomePage(),
     FavoritePage(),
     SettingsPage(),
   ];
-
-  final NotificationHelper _notificationHelper = NotificationHelper();
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(

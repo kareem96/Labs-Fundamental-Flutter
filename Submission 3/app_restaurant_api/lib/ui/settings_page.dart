@@ -39,29 +39,32 @@ class SettingsPage extends StatelessWidget {
       builder: (context, provider, child) {
         return ListView(
           children: [
-            ListTile(
-              title: const Text('Dark Theme'),
-              trailing: Switch.adaptive(
-                  value: provider.isDarkTheme,
-                  onChanged: (value) {
-                    provider.enableDarkTheme(value);
-                  }),
+            Material(
+              child: ListTile(
+                title: const Text('Dark Theme'),
+                trailing: Switch.adaptive(
+                    value: provider.isDarkTheme,
+                    onChanged: (value) {
+                      provider.enableDarkTheme(value);
+                    }),
+              ),
             ),
-            ListTile(
-              title: const Text('Notification'),
-              trailing: Consumer<SchedulingProvider>(
-                builder: (context, scheduled, _) {
-                  return Switch.adaptive(
-                      value: provider.isDailyRestaurant,
-                      onChanged: (value) {
-                        if (Platform.isIOS) {
-                          customDialog(context);
-                        } else {
-                          scheduled.scheduledReminder(value);
-                          provider.enableDarkTheme(value);
-                        }
-                      });
-                },
+            Material(
+              child: ListTile(
+                title: const Text('Notification'),
+                trailing: Consumer<SchedulingProvider>(
+                  builder: (context, scheduled, _) {
+                    return Switch.adaptive(
+                        value: scheduled.isScheduled,
+                        onChanged: (value) async {
+                          if (Platform.isIOS) {
+                            customDialog(context);
+                          } else {
+                            scheduled.scheduledReminder(value);
+                          }
+                        });
+                  },
+                ),
               ),
             )
           ],

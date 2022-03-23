@@ -1,13 +1,11 @@
 import 'package:app_restaurant_api/data/model/drink.dart';
 import 'package:app_restaurant_api/data/model/food.dart';
 import 'package:app_restaurant_api/data/model/restau.dart';
-import 'package:app_restaurant_api/data/response/restaurant_details_response.dart';
 import 'package:app_restaurant_api/provider/restaurant_details_provider.dart';
 import 'package:app_restaurant_api/utils/constants.dart';
 import 'package:app_restaurant_api/utils/state_result.dart';
 import 'package:app_restaurant_api/utils/theme.dart';
 import 'package:app_restaurant_api/widgets/platform_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +16,7 @@ import '../widgets/favorite_button.dart';
 
 class RestaurantDetail extends StatefulWidget {
   static const routeName = '/detail_page';
-  final String restaurant;
+  final Restaurants restaurant;
 
   const RestaurantDetail({Key? key, required this.restaurant})
       : super(key: key);
@@ -36,7 +34,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
         context,
         listen: false,
       );
-      provider.getDetails(widget.restaurant);
+      provider.getDetails(widget.restaurant.id);
     });
     super.initState();
   }
@@ -72,20 +70,21 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
                 ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 4, vertical: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           InkWell(
                             onTap: () => Navigator.pop(context),
                             child: Container(
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: kBlueColor,
                               ),
                               child: const Icon(
-                                CupertinoIcons.back,
+                                Icons.keyboard_backspace,
                                 color: Colors.white,
                               ),
                             ),
@@ -98,6 +97,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
                       height: 150,
                     ),
                     Container(
+                      height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
                         borderRadius:
@@ -174,8 +174,8 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Description'),
-                                SizedBox(
+                                const Text('Description'),
+                                const SizedBox(
                                   height: 8,
                                 ),
                                 ReadMoreText(
@@ -298,7 +298,6 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // return Container();
     return PlatformWidget(androidBuilder: _buildAndroid, iosBuilder: _buildIos);
   }
 }
