@@ -1,4 +1,3 @@
-import 'package:app_restaurant_api/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -58,11 +57,6 @@ class _CardCustomState extends State<CardCustom> {
                         children: [
                           Text(
                             widget.rating.toString(),
-                            style: blackTextStyle.copyWith(
-                              fontSize: 14,
-                              fontWeight: medium,
-                              decoration: TextDecoration.none,
-                            ),
                           ),
                           const SizedBox(
                             width: 8,

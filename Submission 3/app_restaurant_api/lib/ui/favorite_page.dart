@@ -1,6 +1,7 @@
 import 'package:app_restaurant_api/provider/database_provider.dart';
 import 'package:app_restaurant_api/ui/detail_page.dart';
 import 'package:app_restaurant_api/utils/state_result.dart';
+import 'package:app_restaurant_api/utils/theme.dart';
 import 'package:app_restaurant_api/widgets/card_custom.dart';
 import 'package:app_restaurant_api/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,7 +64,15 @@ class FavoritePage extends StatelessWidget {
           );
         } else {
           return Center(
-            child: Text(provider.message),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Belum ada data favorite', style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: bold
+                ),)
+              ],
+            ),
           );
         }
       },

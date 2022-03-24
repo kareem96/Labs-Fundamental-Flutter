@@ -2,6 +2,7 @@ import 'package:app_restaurant_api/data/model/restau.dart';
 import 'package:app_restaurant_api/provider/database_provider.dart';
 import 'package:app_restaurant_api/utils/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteButton extends StatelessWidget {
@@ -21,10 +22,15 @@ class FavoriteButton extends StatelessWidget {
                 ? InkWell(
                     onTap: () {
                       provider.removeFavorite(favorite.id);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Remove to Favorite'),
-                        duration: Duration(milliseconds: 500),
-                      ));
+                      Fluttertoast.showToast(
+                        msg: 'Mengahapus dari favorite',
+                        toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -42,9 +48,15 @@ class FavoriteButton extends StatelessWidget {
                 : InkWell(
                     onTap: () {
                       provider.addFavorite(favorite);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Add to Favorite'),
-                          duration: Duration(milliseconds: 500)));
+                      Fluttertoast.showToast(
+                          msg: 'Menambahkan ke favorite',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(

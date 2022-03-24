@@ -1,12 +1,11 @@
 
 
-
-import 'package:app_restaurant_api/data/model/restau.dart';
+import '../model/restau_detail.dart';
 
 class RestaurantDetailsResponse{
   bool error;
   String message;
-  Restaurants restaurant;
+  Restaurant restaurant;
 
   RestaurantDetailsResponse({
     required this.error,
@@ -17,7 +16,7 @@ class RestaurantDetailsResponse{
   factory RestaurantDetailsResponse.fromJson(Map<String, dynamic> json) => RestaurantDetailsResponse(
       error: json['error'],
       message: json['message'],
-      restaurant: Restaurants.fromJson(json['restaurant']),
+      restaurant: Restaurant.fromJsonDetail(json['restaurant']),
   );
 
   Map<String, dynamic> toJson() => {

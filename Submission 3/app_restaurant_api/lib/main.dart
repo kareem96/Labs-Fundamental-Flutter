@@ -18,13 +18,14 @@ import 'package:app_restaurant_api/ui/search_restaurant_page.dart';
 import 'package:app_restaurant_api/ui/settings_page.dart';
 import 'package:app_restaurant_api/ui/splash_screen.dart';
 import 'package:app_restaurant_api/utils/background_service.dart';
-import 'package:app_restaurant_api/utils/notification_helper.dart';
-import 'package:app_restaurant_api/utils/preference_helper.dart';
+import 'package:app_restaurant_api/helper/preference_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'helper/notification_helper.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();

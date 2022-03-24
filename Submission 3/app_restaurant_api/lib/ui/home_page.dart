@@ -1,4 +1,3 @@
-import 'package:app_restaurant_api/data/model/restau.dart';
 import 'package:app_restaurant_api/provider/restaurant_provider.dart';
 import 'package:app_restaurant_api/ui/detail_page.dart';
 import 'package:app_restaurant_api/ui/search_restaurant_page.dart';
@@ -79,82 +78,9 @@ class HomePage extends StatelessWidget {
                           });
                     });
               } else {
-                return Text("");
+                return const Text("");
               }
             }),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildListItem(Restaurants resto, BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      padding: const EdgeInsets.all(10),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(2, 1),
-              blurRadius: 10,
-            ),
-          ]),
-      child: Stack(
-        children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  "https://restaurant-api.dicoding.dev/images/medium/" +
-                      resto.pictureId,
-                  width: 100,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      resto.name,
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.share_location,
-                              color: Colors.redAccent[100],
-                              size: 20,
-                            ),
-                            Text(resto.city),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                              size: 20,
-                            ),
-                            Text(resto.rating.toString())
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
           ),
         ],
       ),

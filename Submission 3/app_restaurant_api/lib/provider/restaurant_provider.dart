@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class RestaurantProvider extends ChangeNotifier{
   final ApiService apiService;
   RestaurantProvider({required this.apiService}){
-    _fetchAllRestaurant();
+    fetchAllRestaurant();
   }
 
   String _message = '';
@@ -25,7 +25,7 @@ class RestaurantProvider extends ChangeNotifier{
 
 
 
-  Future<dynamic> _fetchAllRestaurant() async{
+  Future<dynamic> fetchAllRestaurant() async{
     try{
       _state = ResultState.loading;
       notifyListeners();

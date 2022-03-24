@@ -43,9 +43,8 @@ ThemeData lightTheme = ThemeData(
   primaryColor: kBlueColor,
   scaffoldBackgroundColor: kWhiteColor,
   appBarTheme: AppBarTheme(
-    backgroundColor: Colors.white,
     titleTextStyle: blackTextStyle.copyWith(fontWeight: bold),
-    elevation: 1,
+    elevation: 2,
   ),
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );

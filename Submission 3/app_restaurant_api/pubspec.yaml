@@ -33,14 +33,13 @@ dependencies:
   provider: ^6.0.1
   flutter_rating_bar: ^4.0.0
   transparent_image: ^2.0.0
-  readmore: ^2.1.0
   sqflite: ^2.0.0+4
   shared_preferences: ^2.0.5
+  cached_network_image: ^3.2.0
   flutter_local_notifications: ^9.1.4
   android_alarm_manager_plus: ^2.0.5
+  fluttertoast: ^8.0.9
   http: ^0.13.4
-  lottie: ^1.2.1
-  curved_navigation_bar: ^1.0.1
   rxdart: ^0.27.3
   intl: ^0.17.0
 

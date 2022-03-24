@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:app_restaurant_api/ui/detail_page.dart';
 import 'package:app_restaurant_api/ui/home_page.dart';
 import 'package:app_restaurant_api/ui/settings_page.dart';
-import 'package:app_restaurant_api/utils/notification_helper.dart';
 import 'package:app_restaurant_api/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../helper/notification_helper.dart';
 import 'favorite_page.dart';
 
 class HomeTab extends StatefulWidget {

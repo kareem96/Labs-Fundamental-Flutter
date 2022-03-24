@@ -1,7 +1,8 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:app_restaurant_api/utils/background_service.dart';
-import 'package:app_restaurant_api/utils/date_time_helper.dart';
+import 'package:app_restaurant_api/helper/date_time_helper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SchedulingProvider extends ChangeNotifier {
   bool _isScheduled = false;
@@ -12,7 +13,8 @@ class SchedulingProvider extends ChangeNotifier {
   Future<bool> scheduledReminder(bool value) async {
     _isScheduled = value;
     if (_isScheduled) {
-      print('Scheduling News Activated');
+      Fluttertoast.showToast(msg: 'Mengaktifkan Penjadwalan');
+      print('Scheduling Activated');
       notifyListeners();
       return await AndroidAlarmManager.periodic(
           const Duration(seconds: 1),
@@ -23,7 +25,8 @@ class SchedulingProvider extends ChangeNotifier {
           wakeup: true
       );
     } else {
-      print('Scheduling News Canceled');
+      Fluttertoast.showToast(msg: 'Menonaktifkan Penjadwalan');
+      print('Scheduling Canceled');
       notifyListeners();
       return await AndroidAlarmManager.cancel(1);
     }
