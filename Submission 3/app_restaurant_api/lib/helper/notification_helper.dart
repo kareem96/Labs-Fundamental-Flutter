@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app_restaurant_api/data/response/restaurant_list_response.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
@@ -55,9 +57,8 @@ class NotificationHelper {
       iOS: iOSPlatformChannelSpecifics,
     );
 
-    var titleNotifications = 'Restaurant Find';
-    var titleNews = response.restaurants[0].name;
-
+    var titleNotifications = '<b>RestaurantApps<b>';
+    var titleNews = 'Restaurant Baru Ditemukan!';
     await flutterLocalNotificationsPlugin.show(
         0, titleNotifications, titleNews, platformChannelSpecifics,
         payload: json.encode(response));
@@ -66,7 +67,8 @@ class NotificationHelper {
   void configureSelectNotificationSubject(String route) {
     selectNotificationSubject.stream.listen((String payload) async {
       var data = RestaurantListResponse.fromJson(json.decode(payload));
-      var article = data.restaurants[0];
+      var indexRestaurants = Random().nextInt(19 -0);
+      var article = data.restaurants[indexRestaurants];
       Navigation.intentWithData(route, article);
     });
   }
