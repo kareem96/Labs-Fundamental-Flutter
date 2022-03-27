@@ -67,7 +67,7 @@ class NotificationHelper {
   void configureSelectNotificationSubject(String route) {
     selectNotificationSubject.stream.listen((String payload) async {
       var data = RestaurantListResponse.fromJson(json.decode(payload));
-      var indexRestaurants = Random().nextInt(19 -0);
+      var indexRestaurants = Random().nextInt((data.restaurants.length) + 1);
       var article = data.restaurants[indexRestaurants];
       Navigation.intentWithData(route, article);
     });
