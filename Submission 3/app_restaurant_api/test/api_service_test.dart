@@ -1,35 +1,25 @@
 import 'package:app_restaurant_api/data/api/api_service.dart';
-import 'package:app_restaurant_api/data/response/restaurant_list_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-
 import 'api_service_test.mocks.dart';
 
-@GenerateMocks([ApiService],
-    customMocks: [MockSpec<http.Client>(as: #MockHttpClient)])
+@GenerateMocks([http.Client])
+
 void main() {
-  late ApiService mockApiService;
+  group('get top headlines', () {
+    test('return top headlines if the http call completes successfully', () async {
+      final apiService =ApiService();
+      final client = MockClient();
 
-  setUp(() {
-    mockApiService = MockApiService();
+      var response = '{"error": false,"message": "success","count": 20, "restaurants": []}';
+
+      when(client.get(Uri.parse('https://restaurant-api.dicoding.dev/list')))
+      .thenAnswer((_) async => http.Response(response, 200));
+
+      var restaurantAct = await apiService.getTopHeadLines(client);
+      expect(restaurantAct.message, 'success');
+    });
   });
-
-  final tesRestaurant = RestaurantListResponse(
-    error: false,
-    message: 'message',
-    count: 0,
-    restaurants: [],
-  );
-
-  test('get topHeadlines', () async{
-    ///arrange
-    when(mockApiService.getTopHeadLines()).thenAnswer((_) async => tesRestaurant);
-    ///act
-    await mockApiService.getTopHeadLines();
-    ///assert
-    verify(mockApiService.getTopHeadLines());
-  });
-
 }

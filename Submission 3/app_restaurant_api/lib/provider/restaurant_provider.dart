@@ -5,6 +5,7 @@ import 'package:app_restaurant_api/data/api/api_service.dart';
 import 'package:app_restaurant_api/data/response/restaurant_list_response.dart';
 import 'package:app_restaurant_api/utils/state_result.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 
 class RestaurantProvider extends ChangeNotifier{
@@ -29,7 +30,7 @@ class RestaurantProvider extends ChangeNotifier{
     try{
       _state = ResultState.loading;
       notifyListeners();
-      final restaurant = await apiService.getTopHeadLines();
+      final restaurant = await apiService.getTopHeadLines(Client());
       if(restaurant.restaurants.isEmpty){
         _state = ResultState.noData;
         notifyListeners();
