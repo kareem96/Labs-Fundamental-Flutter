@@ -7,6 +7,8 @@ import 'package:app_restaurant_api/widgets/card_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/theme.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   static const routeName = '/restaurants';
@@ -43,16 +45,13 @@ class HomePage extends StatelessWidget {
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "images/connection.png",
-                        width: 50,
-                      ),
-                      const Text(
-                        " Gagal Memuat Data\nHarap Periksa Koneksi Internet kamu",
+                    children: const [
+                      Icon(Icons.wifi_off, size: 50,),
+                      Text('Gagal Memuat Data\nHarap Periksa Koneksi Internet kamu',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, color: Colors.black),
-                      ),
+                        style: TextStyle(
+                          fontSize: 16,
+                      ),)
                     ],
                   ),
                 );

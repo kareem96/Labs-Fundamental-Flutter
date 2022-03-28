@@ -54,7 +54,7 @@ class _RestaurantSearchState extends State<RestaurantSearch> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.search, size: 150,),
+                Icon(Icons.search, size: 70,),
                 Text("Restaurant Not Found")
               ],
             ),
