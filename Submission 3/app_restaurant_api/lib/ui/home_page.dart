@@ -7,8 +7,6 @@ import 'package:app_restaurant_api/widgets/card_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/theme.dart';
-
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   static const routeName = '/restaurants';

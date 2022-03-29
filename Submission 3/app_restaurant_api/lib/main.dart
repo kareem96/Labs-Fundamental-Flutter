@@ -101,8 +101,7 @@ class _MyAppState extends State<MyApp> {
                   RestaurantSearch.routeName: (context) =>
                       const RestaurantSearch(),
                   RestaurantDetail.routeName: (context) => RestaurantDetail(
-                        restaurant: ModalRoute.of(context)?.settings.arguments
-                            as Restaurants,
+                        restaurant: ModalRoute.of(context)?.settings.arguments as Restaurants,
                       ),
                   SettingsPage.routeName: (context) => const SettingsPage(),
                 });

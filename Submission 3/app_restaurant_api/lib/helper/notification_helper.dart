@@ -6,6 +6,7 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:convert';
 
 import '../common/navigation.dart';
+import '../data/model/restau.dart';
 
 final selectNotificationSubject = BehaviorSubject<String>();
 
@@ -38,9 +39,7 @@ class NotificationHelper {
     });
   }
 
-  Future<void> showNotification(
-      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-      RestaurantListResponse response) async {
+  Future<void> showNotification(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, RestaurantListResponse response) async {
     var _channelId = '1';
     var _channelName = 'channel_01';
 
@@ -57,19 +56,22 @@ class NotificationHelper {
       iOS: iOSPlatformChannelSpecifics,
     );
 
-    var titleNotifications = '<b>RestaurantApps<b>';
-    var titleNews = 'Restaurant Baru Ditemukan!';
+    var titleNotifications = '<b>Restaurant<b>';
+    var randomRestaurant = Random().nextInt(response.restaurants.length + 1);
+    var title = response.restaurants[randomRestaurant].name;
+
     await flutterLocalNotificationsPlugin.show(
-        0, titleNotifications, titleNews, platformChannelSpecifics,
-        payload: json.encode(response));
+        0,
+        title,
+        titleNotifications,
+        platformChannelSpecifics,
+        payload: json.encode(response.restaurants[randomRestaurant].toJson()));
   }
 
   void configureSelectNotificationSubject(String route) {
     selectNotificationSubject.stream.listen((String payload) async {
-      var data = RestaurantListResponse.fromJson(json.decode(payload));
-      var indexRestaurants = Random().nextInt((data.restaurants.length) + 1);
-      var article = data.restaurants[indexRestaurants];
-      Navigation.intentWithData(route, article);
+      var data = Restaurants.fromJson(json.decode(payload));
+      Navigation.intentWithData(route, data);
     });
   }
 }
